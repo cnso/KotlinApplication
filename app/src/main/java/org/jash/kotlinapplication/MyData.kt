@@ -20,7 +20,7 @@ class MyData:LifecycleEventObserver {
         when(event) {
             Lifecycle.Event.ON_CREATE -> load()
             Lifecycle.Event.ON_STOP -> release()
-            else -> null
+            else -> {}
         }
     }
 }
