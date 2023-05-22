@@ -17,8 +17,10 @@ class MainActivity2 : AppCompatActivity() {
             DataBindingUtil.setContentView<ActivityMain2Binding>(this, R.layout.activity_main2)
         var adapter = CommonAdapter(mapOf(Product::class.java to (R.layout.list_item to BR.product)))
         var subcategoryAdapter = CommonAdapter(mapOf(Category::class.java to (R.layout.category_item to BR.category)))
+        var categoryAdapter = CommonAdapter(mapOf(Category::class.java to (R.layout.text_item to BR.category)))
         binding.adapter = adapter
         binding.subcategoryAdapter = subcategoryAdapter
+        binding.categoryAdapter = categoryAdapter
         var create = retrofit.create(GoodService::class.java)
         val safeSubscribe =  SafeSubscribe(
             proscessor.ofType(String::class.java)
@@ -26,6 +28,7 @@ class MainActivity2 : AppCompatActivity() {
                 .subscribe {
                     when(it){
                         "clearProduct" -> adapter.clear()
+                        "clearSubcategory" -> subcategoryAdapter.clear()
                         else -> Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
                     }
                 },
@@ -36,6 +39,12 @@ class MainActivity2 : AppCompatActivity() {
                 .filter {it.parent_id != 0}
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {subcategoryAdapter += it},
+            create.getCategory(0)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    categoryAdapter += it.data
+                           },
+
             create.getCategory(1)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { subcategoryAdapter += it.data },

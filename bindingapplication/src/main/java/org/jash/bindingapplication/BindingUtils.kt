@@ -10,7 +10,7 @@ fun setBitmap(view:ImageView, bitmap: Bitmap) {
     view.setImageBitmap(bitmap)
 }
 @BindingAdapter("android:image_url")
-fun setImageUrl(view: ImageView, url:String) {
+fun setImageUrl(view: ImageView, url:String?) {
     Glide.with(view).load(url).into(view)
 
 }

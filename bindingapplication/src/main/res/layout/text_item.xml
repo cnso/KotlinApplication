@@ -3,22 +3,19 @@
 
     <data>
         <variable
-            name="product"
-            type="org.jash.bindingapplication.model.Product" />
+            name="category"
+            type="org.jash.bindingapplication.model.Category" />
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:image_url="@{product.goodsDefaultIcon}"/>
+        android:onClick="@{() -> category.loadSubcategory() }">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{product.goodsDesc}"/>
-
+            android:textSize="20sp"
+            android:text="@{category.category_name}"/>
     </LinearLayout>
 </layout>

@@ -12,7 +12,7 @@ data class Category(
 ) {
     fun loadProduct() {
         proscessor.onNext("clearProduct")
-        retrofit.create(GoodService::class.java)
+        val disposable = retrofit.create(GoodService::class.java)
             .getProducts(id, 1, 10)
             .subscribe {
                 if (it.data.isEmpty()) {
@@ -20,6 +20,16 @@ data class Category(
                 } else {
                     it.data.forEach(proscessor::onNext)
                 }
+            }
+    }
+    fun loadSubcategory() {
+        proscessor.onNext("clearSubcategory")
+        val subscribe = retrofit.create(GoodService::class.java)
+            .getCategory(id)
+            .subscribe {
+                it.data.forEach ( proscessor::onNext )
+                if (it.data.isEmpty().not())
+                    it.data[0].loadProduct()
             }
     }
 }
