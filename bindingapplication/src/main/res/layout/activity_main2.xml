@@ -7,13 +7,24 @@
         <variable
             name="adapter"
             type="org.jash.bindingapplication.adapter.CommonAdapter" />
+       <variable
+            name="subcategoryAdapter"
+            type="org.jash.bindingapplication.adapter.CommonAdapter" />
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         tools:context=".MainActivity2">
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:adapter="@{subcategoryAdapter}"
+            />
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"

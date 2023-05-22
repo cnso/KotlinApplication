@@ -1,6 +1,7 @@
 package org.jash.bindingapplication
 
 import android.util.Log
+import io.reactivex.rxjava3.processors.PublishProcessor
 import io.reactivex.rxjava3.schedulers.Schedulers
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
@@ -15,4 +16,7 @@ val Any.retrofit by lazy {
         .addCallAdapterFactory(RxJava3CallAdapterFactory.createWithScheduler(Schedulers.io()))
         .baseUrl("http://43.143.146.165:8181/")
         .build()
+}
+val proscessor by lazy {
+    PublishProcessor.create<Any>()
 }
