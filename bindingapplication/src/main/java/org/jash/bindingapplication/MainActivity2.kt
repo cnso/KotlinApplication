@@ -65,22 +65,17 @@ class MainActivity2 : AppCompatActivity() {
                 .subscribe {subcategoryAdapter += it},
             create.getCategory(0)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    categoryAdapter += it.data
-                           },
+                .subscribe { categoryAdapter += it.data },
 
             create.getCategory(1)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { subcategoryAdapter += it.data },
+                .subscribe {  it.data.forEach(proscessor::onNext) },
             create.getProducts(0, 1, 10)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { adapter += it.data },
+                .subscribe { it.data.forEach(proscessor::onNext) },
             create.getBanner()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    logd(it.data.toString())
-                    myBannerAdapter += it.data
-                }
+                .subscribe { it.data.forEach(proscessor::onNext) }
         )
         lifecycle.addObserver(safeSubscribe)
     }
