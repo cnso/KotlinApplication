@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import org.jash.bindingapplication.adapter.CommonAdapter
+import org.jash.bindingapplication.adapter.MyBannerAdapter
 import org.jash.bindingapplication.databinding.ActivityMain2Binding
 import org.jash.bindingapplication.model.Category
 import org.jash.bindingapplication.model.Product
@@ -21,20 +22,25 @@ class MainActivity2 : AppCompatActivity() {
         gridLayoutManager.spanSizeLookup = object : SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
                return when(position) {
-                    0 -> 2
+                    0, 1 -> 2
                     else -> 1
                }
             }
         }
         binding.productList.layoutManager = gridLayoutManager
+        val myBannerAdapter = MyBannerAdapter()
         var subcategoryAdapter = CommonAdapter(mapOf(Category::class.java to (R.layout.category_item to BR.category)))
 
         var adapter = CommonAdapter(
             mapOf(
                 Product::class.java to (R.layout.list_item to BR.product),
-                CommonAdapter::class.java to (R.layout.navigation_item to BR.adapter)
+                CommonAdapter::class.java to (R.layout.navigation_item to BR.adapter),
+                MyBannerAdapter::class.java to (R.layout.banner_item to BR.adapter)
             ),
-            mutableListOf(subcategoryAdapter)
+            mutableListOf(
+                myBannerAdapter,
+                subcategoryAdapter
+            )
         )
         var categoryAdapter = CommonAdapter(mapOf(Category::class.java to (R.layout.text_item to BR.category)))
         binding.adapter = adapter
@@ -68,7 +74,13 @@ class MainActivity2 : AppCompatActivity() {
                 .subscribe { subcategoryAdapter += it.data },
             create.getProducts(0, 1, 10)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { adapter += it.data }
+                .subscribe { adapter += it.data },
+            create.getBanner()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    logd(it.data.toString())
+                    myBannerAdapter += it.data
+                }
         )
         lifecycle.addObserver(safeSubscribe)
     }
