@@ -1,7 +1,7 @@
 package org.jash.bindingapplication
 
 import io.reactivex.rxjava3.core.Observable
-import org.jash.bindingapplication.model.Banner
+import org.jash.bindingapplication.model.BannerEntry
 import org.jash.bindingapplication.model.Category
 import org.jash.bindingapplication.model.Product
 import org.jash.bindingapplication.model.Res
@@ -19,5 +19,5 @@ interface GoodService {
     fun getCategory(@Query("parent_id") id:Int):Observable<Res<Category>>
 
     @GET("/banner/json")
-    fun getBanner():Observable<Res<Banner>>
+    fun getBanner():Observable<Res<BannerEntry>>
 }

@@ -2,7 +2,7 @@ package org.jash.bindingapplication.model
 
 import com.google.gson.annotations.SerializedName
 
-data class Banner(
+data class BannerEntry(
     val desc: String,
     val id: Int,
     @SerializedName("imagePath")
