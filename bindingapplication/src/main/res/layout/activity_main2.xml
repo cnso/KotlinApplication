@@ -8,9 +8,6 @@
             name="adapter"
             type="org.jash.bindingapplication.adapter.CommonAdapter" />
        <variable
-            name="subcategoryAdapter"
-            type="org.jash.bindingapplication.adapter.CommonAdapter" />
-       <variable
             name="categoryAdapter"
             type="org.jash.bindingapplication.adapter.CommonAdapter" />
     </data>
@@ -26,17 +23,9 @@
             tools:context=".MainActivity2">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                android:adapter="@{subcategoryAdapter}"
-                />
-            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/product_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:spanCount="2"
                 android:adapter="@{adapter}"/>
 
         </LinearLayout>

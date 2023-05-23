@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import org.jash.bindingapplication.adapter.CommonAdapter
 import org.jash.bindingapplication.databinding.ActivityMain2Binding
@@ -15,11 +17,27 @@ class MainActivity2 : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         var binding =
             DataBindingUtil.setContentView<ActivityMain2Binding>(this, R.layout.activity_main2)
-        var adapter = CommonAdapter(mapOf(Product::class.java to (R.layout.list_item to BR.product)))
+        val gridLayoutManager = GridLayoutManager(this, 2)
+        gridLayoutManager.spanSizeLookup = object : SpanSizeLookup() {
+            override fun getSpanSize(position: Int): Int {
+               return when(position) {
+                    0 -> 2
+                    else -> 1
+               }
+            }
+        }
+        binding.productList.layoutManager = gridLayoutManager
         var subcategoryAdapter = CommonAdapter(mapOf(Category::class.java to (R.layout.category_item to BR.category)))
+
+        var adapter = CommonAdapter(
+            mapOf(
+                Product::class.java to (R.layout.list_item to BR.product),
+                CommonAdapter::class.java to (R.layout.navigation_item to BR.adapter)
+            ),
+            mutableListOf(subcategoryAdapter)
+        )
         var categoryAdapter = CommonAdapter(mapOf(Category::class.java to (R.layout.text_item to BR.category)))
         binding.adapter = adapter
-        binding.subcategoryAdapter = subcategoryAdapter
         binding.categoryAdapter = categoryAdapter
         var create = retrofit.create(GoodService::class.java)
         val safeSubscribe =  SafeSubscribe(
@@ -27,7 +45,7 @@ class MainActivity2 : AppCompatActivity() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
                     when(it){
-                        "clearProduct" -> adapter.clear()
+                        "clearProduct" -> adapter.removeIf { it.javaClass == Product::class.java}
                         "clearSubcategory" -> subcategoryAdapter.clear()
                         else -> Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
                     }

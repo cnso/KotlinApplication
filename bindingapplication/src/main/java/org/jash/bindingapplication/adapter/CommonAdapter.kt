@@ -1,11 +1,13 @@
 package org.jash.bindingapplication.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import java.util.function.Predicate
 
 class CommonAdapter<D>(private val ids: Map<Class<out D>, Pair<Int, Int>>, private var data:MutableList<D> = mutableListOf()):RecyclerView.Adapter<CommonViewHolder>() {
 
@@ -38,6 +40,10 @@ class CommonAdapter<D>(private val ids: Map<Class<out D>, Pair<Int, Int>>, priva
         val size = data.size
         data.clear()
         notifyItemRangeRemoved(0, size)
+    }
+    fun removeIf(p:Predicate<D>){
+        data.removeIf(p)
+        notifyDataSetChanged()
     }
 
 }
