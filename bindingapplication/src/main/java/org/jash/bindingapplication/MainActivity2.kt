@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -66,7 +67,6 @@ class MainActivity2 : AppCompatActivity() {
             create.getCategory(0)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { categoryAdapter += it.data },
-
             create.getCategory(1)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {  it.data.forEach(proscessor::onNext) },

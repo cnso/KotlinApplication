@@ -14,6 +14,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/bindingapplication" />
             <option value="$PROJECT_DIR$/javaapplication" />
+            <option value="$PROJECT_DIR$/roomdemo" />
           </set>
         </option>
       </GradleProjectSettings>
