@@ -1,7 +1,7 @@
 package org.jash.roomdemo.model
 
-data class Res<D>(
+data class Res<T>(
     var code:Int,
     var message:String,
-    var data:MutableList<D>
+    var data:T
 )
