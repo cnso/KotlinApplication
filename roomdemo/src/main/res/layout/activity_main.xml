@@ -12,10 +12,12 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingHorizontal="10dp"
         tools:context=".MainActivity">
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:layout_constraintVertical_chainStyle="packed"
             android:hint="用户名"
             android:id="@+id/username"
             app:layout_constraintStart_toStartOf="parent"
@@ -51,6 +53,7 @@
             android:id="@+id/login"
             android:onClick="@{() -> user.login()}"
             android:text="保存"
+            app:layout_constraintVertical_chainStyle="packed"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
