@@ -21,7 +21,7 @@ interface UserDao {
     @Query("select * from user where id = :id")
     fun getUserById(id:Int):Observable<User>
     @Upsert
-    fun insert(vararg user: User):Completable
+    fun insert(vararg user: User)
     @Delete
     fun deleteById(user: User)
 }

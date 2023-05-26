@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
 import androidx.room.Room
@@ -15,6 +16,7 @@ import org.jash.roomdemo.database.AppDatabase
 import org.jash.roomdemo.databinding.ActivityMainBinding
 import org.jash.roomdemo.model.Save
 import org.jash.roomdemo.model.User
+import org.jash.roomdemo.viewmodel.UserViewModel
 
 class MainActivity : AppCompatActivity() {
     val TAG = this.javaClass.simpleName
@@ -40,9 +42,27 @@ class MainActivity : AppCompatActivity() {
                         else -> Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
                     }
                 },
-            )
+        )
+        val adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1)
+        binding.rawUsername.setAdapter(adapter)
         lifecycle.addObserver(safeSubscribe)
-        val user = User(username = "", password = "")
+        val userViewModel by viewModels<UserViewModel>()
+        val user = userViewModel.user
         binding.user = user
+
+
+        database.getUserDao().getUsers()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { adapter.addAll(it.map { it.username }) }
+
+//        userViewModel.liveData.observeForever {
+//            logd(it)
+//            binding.username.editText?.setText(it)
+//        }
+//        //  在主线程中使用
+//        userViewModel.liveData.setValue("34234")
+//        // 在所有线程中都可使用
+////        userViewModel.liveData.postValue("123123")
     }
 }

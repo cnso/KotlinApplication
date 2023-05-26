@@ -24,7 +24,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/password">
-            <EditText
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/raw_username"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="17dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@={user.username}"/>
