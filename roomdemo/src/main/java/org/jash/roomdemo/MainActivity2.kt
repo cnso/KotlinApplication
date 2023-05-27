@@ -9,6 +9,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 import org.jash.roomdemo.databinding.ActivityMain2Binding
 import org.jash.roomdemo.model.Category
+import org.jash.roomdemo.repository.ApiRepository
 import org.jash.roomdemo.viewmodel.Main2ViewModel
 
 class MainActivity2 : AppCompatActivity() {
@@ -31,21 +32,32 @@ class MainActivity2 : AppCompatActivity() {
                 },
             proscessor.ofType(Category::class.java)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { adapter += it },
+                .subscribe {
+                    binding.refresh.isRefreshing = false
+                    adapter += it
+                           },
+
         )
+        val apiRepository = ApiRepository(database, retrofit)
         if (main2ViewModel.category.isEmpty()) {
-            retrofit.create(GoodService::class.java).getCategory(1)
-                .subscribe {
-                    logd("网络请求")
-                    proscessor.onNext("clearCategory")
-                    it.data.forEach(proscessor::onNext)
-                }
-            database.getCategoryDao().getCategory(1)
-                .subscribeOn(Schedulers.io())
-                .subscribe {
-                    logd(it.toString())
-                    it.forEach(proscessor::onNext)
-                }
+            apiRepository.loadCategory(1, loadLocal = true)
+//            retrofit.create(GoodService::class.java).getCategory(1)
+//                .subscribe {
+//                    logd("网络请求")
+//                    proscessor.onNext("clearCategory")
+//                    it.data.forEach(proscessor::onNext)
+//                }
+//            database.getCategoryDao().getCategory(1)
+//                .subscribeOn(Schedulers.io())
+//                .subscribe {
+//                    logd(it.toString())
+//                    it.forEach(proscessor::onNext)
+//                }
+        }
+        binding.refresh.setColorSchemeColors(0xff0000, 0x00ffff, 0x00ff00)
+        binding.refresh.setOnRefreshListener {
+            adapter.clear()
+            apiRepository.loadCategory(1)
         }
 
     }
