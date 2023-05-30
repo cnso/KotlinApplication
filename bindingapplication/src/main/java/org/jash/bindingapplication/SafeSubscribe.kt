@@ -8,7 +8,7 @@ import io.reactivex.rxjava3.disposables.Disposable
 class SafeSubscribe(vararg val d: Disposable):LifecycleEventObserver {
     override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
         when(event) {
-            Lifecycle.Event.ON_DESTROY -> d.filter { it.isDisposed }.forEach { it.dispose() }
+            Lifecycle.Event.ON_DESTROY -> d.filter { !it.isDisposed }.forEach { it.dispose() }
             else -> {}
         }
     }

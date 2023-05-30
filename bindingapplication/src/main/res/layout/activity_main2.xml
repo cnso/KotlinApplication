@@ -13,6 +13,7 @@
     </data>
 
     <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:openDrawer="start">
@@ -21,7 +22,12 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             tools:context=".MainActivity2">
-
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="?attr/actionBarSize"
+                android:background="?attr/colorPrimary" />
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/product_list"
                 android:layout_width="match_parent"

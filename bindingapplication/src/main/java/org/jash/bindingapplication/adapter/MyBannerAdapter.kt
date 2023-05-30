@@ -7,7 +7,7 @@ import org.jash.bindingapplication.model.BannerEntry
 
 class MyBannerAdapter(data:MutableList<BannerEntry> = mutableListOf()):BannerImageAdapter<BannerEntry>(data) {
     override fun onBindView(holder: BannerImageHolder?, data: BannerEntry?, position: Int, size: Int) {
-        Glide.with(holder!!.imageView).load(data?.imagePath).into(holder.imageView)
+        holder?.imageView?.let { Glide.with(it).load(data?.imagePath).into(it) }
     }
     operator fun plusAssign(banner: BannerEntry) {
         mDatas.add(banner)
