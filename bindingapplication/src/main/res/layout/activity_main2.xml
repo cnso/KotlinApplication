@@ -2,46 +2,50 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-
     <data>
+
         <variable
             name="adapter"
             type="org.jash.bindingapplication.adapter.CommonAdapter" />
-       <variable
+
+        <variable
             name="categoryAdapter"
             type="org.jash.bindingapplication.adapter.CommonAdapter" />
     </data>
 
-    <androidx.drawerlayout.widget.DrawerLayout
-        android:id="@+id/drawer"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:openDrawer="start">
-        <LinearLayout
+        android:orientation="vertical">
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            tools:context=".MainActivity2">
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="?attr/actionBarSize"
-                android:background="?attr/colorPrimary" />
+            android:layout_height="wrap_content"
+            android:minHeight="?attr/actionBarSize"
+            android:background="?attr/colorPrimary" />
+
+        <androidx.drawerlayout.widget.DrawerLayout
+            android:id="@+id/drawer"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            tools:openDrawer="start">
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/product_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:adapter="@{adapter}"/>
+                android:adapter="@{adapter}" />
 
-        </LinearLayout>
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="300dp"
-            android:layout_height="match_parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:background="@color/white"
-            android:layout_gravity="start"
-            android:adapter="@{categoryAdapter}"
-            />
-    </androidx.drawerlayout.widget.DrawerLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="300dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:adapter="@{categoryAdapter}"
+                android:background="@color/white"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+        </androidx.drawerlayout.widget.DrawerLayout>
+
+    </LinearLayout>
+
 </layout>

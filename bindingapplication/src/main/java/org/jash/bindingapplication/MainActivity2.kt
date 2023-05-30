@@ -1,6 +1,7 @@
 package org.jash.bindingapplication
 
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -25,6 +26,7 @@ class MainActivity2 : BaseActivity() {
     lateinit var subcategoryAdapter:CommonAdapter<Category>
     lateinit var categoryAdapter:CommonAdapter<Category>
     lateinit var myBannerAdapter: MyBannerAdapter
+    lateinit var mDrawerToggle:ActionBarDrawerToggle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        var binding =
@@ -38,7 +40,7 @@ class MainActivity2 : BaseActivity() {
         // Make the hamburger button work
 
         // Make the hamburger button work
-        val mDrawerToggle = ActionBarDrawerToggle(this, binding.drawer, R.string.app_name, R.string.app_name)
+        mDrawerToggle = ActionBarDrawerToggle(this, binding.drawer, R.string.app_name, R.string.app_name)
         binding.drawer.addDrawerListener(mDrawerToggle)
         mDrawerToggle.syncState()
         val gridLayoutManager = GridLayoutManager(this, 2)
@@ -102,8 +104,9 @@ class MainActivity2 : BaseActivity() {
                 .subscribe { it.data.forEach(proscessor::onNext) }
         )
         lifecycle.addObserver(safeSubscribe)
-        proscessor.onNext("线程测试")
     }
+
+    override fun onOptionsItemSelected(item: MenuItem) = mDrawerToggle.onOptionsItemSelected(item) && super.onOptionsItemSelected(item)
 
     @Subscribe
     fun subscribeProduct(product: Product) {
