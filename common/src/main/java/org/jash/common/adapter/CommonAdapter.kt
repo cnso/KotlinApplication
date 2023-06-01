@@ -1,6 +1,5 @@
-package org.jash.roomdemo
+package org.jash.common.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil

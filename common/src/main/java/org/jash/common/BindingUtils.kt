@@ -1,4 +1,4 @@
-package org.jash.roomdemo
+package org.jash.common
 
 import android.graphics.Bitmap
 import android.widget.ImageView

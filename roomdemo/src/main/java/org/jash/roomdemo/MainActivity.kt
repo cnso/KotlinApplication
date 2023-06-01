@@ -12,6 +12,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.room.Room
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
+import org.jash.common.activity.SafeSubscribe
+import org.jash.common.proscessor
 import org.jash.roomdemo.database.AppDatabase
 import org.jash.roomdemo.databinding.ActivityMainBinding
 import org.jash.roomdemo.model.Save
@@ -49,7 +51,6 @@ class MainActivity : AppCompatActivity() {
         val userViewModel by viewModels<UserViewModel>()
         val user = userViewModel.user
         binding.user = user
-
 
         database.getUserDao().getUsers()
             .subscribeOn(Schedulers.io())

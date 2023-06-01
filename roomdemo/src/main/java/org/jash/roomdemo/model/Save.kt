@@ -1,10 +1,9 @@
 package org.jash.roomdemo.model
 
 import io.reactivex.rxjava3.schedulers.Schedulers
+import org.jash.common.proscessor
 import org.jash.roomdemo.GoodService
 import org.jash.roomdemo.dao.UserDao
-import org.jash.roomdemo.logd
-import org.jash.roomdemo.proscessor
 import org.jash.roomdemo.retrofit
 
 class Save(val userDao: UserDao) {

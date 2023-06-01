@@ -1,9 +1,9 @@
 package org.jash.roomdemo.repository
 
 import io.reactivex.rxjava3.schedulers.Schedulers
+import org.jash.common.proscessor
 import org.jash.roomdemo.GoodService
 import org.jash.roomdemo.database.AppDatabase
-import org.jash.roomdemo.proscessor
 import retrofit2.Retrofit
 
 class ApiRepository(val database: AppDatabase, val retrofit: Retrofit) {

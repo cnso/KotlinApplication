@@ -6,7 +6,7 @@
     <data>
         <variable
             name="adapter"
-            type="org.jash.roomdemo.CommonAdapter" />
+            type="org.jash.common.adapter.CommonAdapter" />
     </data>
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/refresh"

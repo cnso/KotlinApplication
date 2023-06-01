@@ -11,10 +11,12 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         maven { url "https://s01.oss.sonatype.org/content/groups/public" }
+        maven { url "https://jitpack.io" }
     }
 }
 rootProject.name = "KotlinApplication"
-include ':app'
-include ':javaapplication'
-include ':bindingapplication'
+//include ':app'
+//include ':javaapplication'
+//include ':bindingapplication'
 include ':roomdemo'
+include ':common'

@@ -1,15 +1,14 @@
-package org.jash.bindingapplication
+package org.jash.common.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
-import org.jash.bindingapplication.annotations.BindingLayout
-import org.jash.bindingapplication.annotations.OnThread
-import org.jash.bindingapplication.annotations.Subscribe
+import org.jash.common.annotations.BindingLayout
+import org.jash.common.annotations.OnThread
+import org.jash.common.annotations.Subscribe
+import org.jash.common.proscessor
 import kotlin.reflect.KClass
 import kotlin.reflect.KMutableProperty1
 import kotlin.reflect.full.*
@@ -43,9 +42,10 @@ open class BaseActivity : AppCompatActivity() {
         )
         lifecycle.addObserver(safeSubscribe)
 //        R.layout::class.java.getField("activity_main2").get(null)?.let { logd(it.toString()) }
-        val property = clazz.declaredMemberProperties.filterIsInstance<KMutableProperty1<BaseActivity, *>>()
-            .find { it.setter.findAnnotations(BindingLayout::class).isNotEmpty() }
-        val layoutId:Int = resources.getIdentifier(property?.let { it.setter.findAnnotations(BindingLayout::class)[0].resName }, "layout", packageName)
-        property?.set(this, DataBindingUtil.setContentView(this, layoutId))
+//        val property = clazz.declaredMemberProperties.filterIsInstance<KMutableProperty1<BaseActivity, *>>()
+//            .find { it.setter.findAnnotations(BindingLayout::class).isNotEmpty() }
+//        val layoutId:Int = property?.let { it.setter.findAnnotations(BindingLayout::class)[0].resName }
+//            ?.let { R.layout::class.java.getField(it).get(null) } as Int
+//        property.set(this, DataBindingUtil.setContentView(this, layoutId))
     }
 }

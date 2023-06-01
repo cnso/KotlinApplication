@@ -1,4 +1,4 @@
-package org.jash.roomdemo
+package org.jash.common.activity
 
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver

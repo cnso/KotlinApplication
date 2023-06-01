@@ -4,6 +4,8 @@ import android.app.Application
 import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.room.Room
 import io.reactivex.rxjava3.schedulers.Schedulers
+import org.jash.common.activity.SafeSubscribe
+import org.jash.common.proscessor
 import org.jash.roomdemo.database.AppDatabase
 import org.jash.roomdemo.model.Category
 import org.jash.roomdemo.model.User
