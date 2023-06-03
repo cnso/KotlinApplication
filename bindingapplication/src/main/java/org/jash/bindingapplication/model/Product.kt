@@ -14,4 +14,5 @@ data class Product(
     val goodsSalesCount: Int,
     val goodsStockCount: Int,
     val id: Int
+
 )

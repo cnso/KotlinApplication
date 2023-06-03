@@ -17,6 +17,6 @@ dependencyResolutionManagement {
 rootProject.name = "KotlinApplication"
 //include ':app'
 //include ':javaapplication'
-//include ':bindingapplication'
+include ':bindingapplication'
 include ':roomdemo'
 include ':common'

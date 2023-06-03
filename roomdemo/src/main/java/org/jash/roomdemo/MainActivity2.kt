@@ -14,20 +14,25 @@ import org.jash.common.annotations.Subscribe
 import org.jash.common.proscessor
 import org.jash.roomdemo.databinding.ActivityMain2Binding
 import org.jash.roomdemo.model.Category
+import org.jash.roomdemo.model.Product
+import org.jash.roomdemo.model.ProductList
 import org.jash.roomdemo.repository.ApiRepository
 import org.jash.roomdemo.viewmodel.Main2ViewModel
 
 class MainActivity2 : BaseActivity() {
-    lateinit var adapter: CommonAdapter<Category>
+    lateinit var adapter: CommonAdapter<Product>
     lateinit var binding:ActivityMain2Binding
+    lateinit var productList:ProductList
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding =
             DataBindingUtil.setContentView<ActivityMain2Binding>(this, R.layout.activity_main2)
-        val main2ViewModel by viewModels<Main2ViewModel> ()
+//        val main2ViewModel by viewModels<Main2ViewModel> ()
+        productList = ProductList()
         adapter =
-            CommonAdapter(mapOf(Category::class.java to (R.layout.item to BR.category)), main2ViewModel.category)
+            CommonAdapter(mapOf(Product::class.java to (R.layout.item to BR.product)), productList.data)
         binding.adapter = adapter
+        binding.list = productList
 //        val safeSubscribe = SafeSubscribe(
 //            proscessor.ofType(String::class.java)
 //                .observeOn(AndroidSchedulers.mainThread())
@@ -45,27 +50,29 @@ class MainActivity2 : BaseActivity() {
 //                           },
 //
 //        )
-        val apiRepository = ApiRepository(database, retrofit)
-        if (main2ViewModel.category.isEmpty()) {
-            apiRepository.loadCategory(1, loadLocal = true)
-//            retrofit.create(GoodService::class.java).getCategory(1)
-//                .subscribe {
-//                    logd("网络请求")
-//                    proscessor.onNext("clearCategory")
-//                    it.data.forEach(proscessor::onNext)
-//                }
-//            database.getCategoryDao().getCategory(1)
-//                .subscribeOn(Schedulers.io())
-//                .subscribe {
-//                    logd(it.toString())
-//                    it.forEach(proscessor::onNext)
-//                }
-        }
-        binding.refresh.setColorSchemeColors(0xff0000, 0x00ffff, 0x00ff00)
-        binding.refresh.setOnRefreshListener {
-            adapter.clear()
-            apiRepository.loadCategory(1)
-        }
+//        val apiRepository = ApiRepository(database, retrofit)
+//        if (main2ViewModel.category.isEmpty()) {
+//            apiRepository.loadCategory(1, loadLocal = true)
+////            retrofit.create(GoodService::class.java).getCategory(1)
+////                .subscribe {
+////                    logd("网络请求")
+////                    proscessor.onNext("clearCategory")
+////                    it.data.forEach(proscessor::onNext)
+////                }
+////            database.getCategoryDao().getCategory(1)
+////                .subscribeOn(Schedulers.io())
+////                .subscribe {
+////                    logd(it.toString())
+////                    it.forEach(proscessor::onNext)
+////                }
+//        }
+//        binding.refresh.setColorSchemeColors(0xff0000, 0x00ffff, 0x00ff00)
+//        binding.refresh.setOnRefreshListener {
+//            adapter.clear()
+//            apiRepository.loadCategory(1)
+//        }
+        retrofit.create(GoodService::class.java).getProducts(0, 1, 5)
+            .subscribe { it.data.forEach(proscessor::onNext) }
 
     }
     @Subscribe
@@ -76,8 +83,9 @@ class MainActivity2 : BaseActivity() {
         }
     }
     @Subscribe
-    fun displayCategory(category: Category) {
+    fun displayProduct(category: Product) {
         binding.refresh.isRefreshing = false
+        category.productList = productList
         adapter += category
     }
 }
