@@ -5,7 +5,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
+        android:onClick="@{view -> product.showDetail(view.context)}"
         android:layout_margin="2dp"
         app:cardCornerRadius="10dp">
 

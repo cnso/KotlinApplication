@@ -41,11 +41,10 @@ open class BaseActivity : AppCompatActivity() {
             }.toTypedArray()
         )
         lifecycle.addObserver(safeSubscribe)
-//        R.layout::class.java.getField("activity_main2").get(null)?.let { logd(it.toString()) }
-//        val property = clazz.declaredMemberProperties.filterIsInstance<KMutableProperty1<BaseActivity, *>>()
-//            .find { it.setter.findAnnotations(BindingLayout::class).isNotEmpty() }
-//        val layoutId:Int = property?.let { it.setter.findAnnotations(BindingLayout::class)[0].resName }
-//            ?.let { R.layout::class.java.getField(it).get(null) } as Int
-//        property.set(this, DataBindingUtil.setContentView(this, layoutId))
+        val property = clazz.declaredMemberProperties.filterIsInstance<KMutableProperty1<BaseActivity, *>>()
+            .find { it.setter.findAnnotations(BindingLayout::class).isNotEmpty() }
+        val layoutId:Int = property?.let { it.setter.findAnnotations(BindingLayout::class)[0].resName }
+            ?.let { resources.getIdentifier(it, "layout", packageName) } ?: 0
+        property?.set(this, DataBindingUtil.setContentView(this, layoutId))
     }
 }

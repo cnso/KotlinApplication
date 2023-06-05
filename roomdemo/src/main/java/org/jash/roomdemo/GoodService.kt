@@ -21,4 +21,6 @@ interface GoodService {
         @Query("currentPage") currentPage:Int,
         @Query("pageSize") pageSize:Int
     ):Observable<Res<List<Product>>>
+    @GET("/goods/detail")
+    fun getDetail(@Query("goods_id") id:Int):Observable<Res<Product>>
 }

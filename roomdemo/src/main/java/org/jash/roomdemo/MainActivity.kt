@@ -1,22 +1,17 @@
 package org.jash.roomdemo
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Lifecycle
-import androidx.room.Room
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 import org.jash.common.activity.SafeSubscribe
 import org.jash.common.proscessor
-import org.jash.roomdemo.database.AppDatabase
 import org.jash.roomdemo.databinding.ActivityMainBinding
-import org.jash.roomdemo.model.Save
 import org.jash.roomdemo.model.User
 import org.jash.roomdemo.viewmodel.UserViewModel
 
