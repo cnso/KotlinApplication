@@ -39,6 +39,12 @@
                 android:checked="@={list.all}"
                 android:text="全选"
                 />
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="@{() -> list.inverse()}"
+                android:text='反选'/>
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

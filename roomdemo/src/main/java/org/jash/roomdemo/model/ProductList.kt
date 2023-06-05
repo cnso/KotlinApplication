@@ -14,4 +14,7 @@ class ProductList:BaseObservable(){
     @get:Bindable
     val sum:Double
         get() = data.filter { it.checked }.map { it.goodsDefaultPrice }.let { if(it.isEmpty()) 0.toDouble() else it.reduce(Double::plus) }
+    fun inverse() {
+        data.forEach { it.checked = !it.checked }
+    }
 }
