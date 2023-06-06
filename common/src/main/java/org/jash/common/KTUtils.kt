@@ -7,6 +7,6 @@ val Any.TAG
     get() = this.javaClass.simpleName
 fun Any.logd(s:String) = Log.d(TAG, s)
 
-val proscessor by lazy {
+val processor by lazy {
     PublishProcessor.create<Any>()
 }

@@ -4,11 +4,16 @@ import android.content.Context
 import android.content.Intent
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
+import androidx.databinding.DataBindingUtil
 import com.google.gson.annotations.SerializedName
+import org.jash.common.logd
+import org.jash.common.processor
 import org.jash.roomdemo.BR
 import org.jash.roomdemo.DetailActivity
+import org.jash.roomdemo.GoodService
+import org.jash.roomdemo.retrofit
 
-class Product(
+data class Product(
     @SerializedName("bannerList")
     val bannerList: List<String>,
     val categoryId: Int,
@@ -38,11 +43,12 @@ class Product(
             it.putExtra("product_id", id)
             context.startActivity(it)
         }
-
     }
-
-    override fun toString(): String {
-        return "Product(bannerList=$bannerList, categoryId=$categoryId, goodsAttribute='$goodsAttribute', goodsBanner='$goodsBanner', goodsCode='$goodsCode', goodsDefaultIcon='$goodsDefaultIcon', goodsDefaultPrice=$goodsDefaultPrice, goodsDesc='$goodsDesc', goodsDetailOne='$goodsDetailOne', goodsDetailTwo='$goodsDetailTwo', goodsSalesCount=$goodsSalesCount, goodsStockCount=$goodsStockCount, id=$id, productList=$productList)"
+    fun addToCart() {
+        retrofit.create(GoodService::class.java).addCart(Cart(goods_id = id, count = 1))
+            .subscribe {
+                processor.onNext(it.message)
+            }
     }
 
 }

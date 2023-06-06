@@ -1,7 +1,7 @@
 package org.jash.roomdemo.repository
 
 import io.reactivex.rxjava3.schedulers.Schedulers
-import org.jash.common.proscessor
+import org.jash.common.processor
 import org.jash.roomdemo.GoodService
 import org.jash.roomdemo.database.AppDatabase
 import retrofit2.Retrofit
@@ -12,7 +12,7 @@ class ApiRepository(val database: AppDatabase, val retrofit: Retrofit) {
              val s = database.getCategoryDao().getCategory(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
-                .subscribe { it.forEach(proscessor::onNext) }
+                .subscribe { it.forEach(processor::onNext) }
         }
         if (loadRemote) {
             val s = retrofit.create(GoodService::class.java).getCategory(id)
@@ -20,14 +20,14 @@ class ApiRepository(val database: AppDatabase, val retrofit: Retrofit) {
                 .subscribe({
                     if (it.code == 200) {
                         if (loadLocal) {
-                            proscessor.onNext("clearCategory")
+                            processor.onNext("clearCategory")
                         }
-                        it.data.forEach(proscessor::onNext)
+                        it.data.forEach(processor::onNext)
                     } else {
-                        proscessor.onNext(it.message)
+                        processor.onNext(it.message)
                     }
                 },{
-                    proscessor.onNext(it.message ?: "网络出错" )
+                    processor.onNext(it.message ?: "网络出错" )
                 })
         }
     }

@@ -28,6 +28,7 @@
                 android:id="@+id/raw_username"
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="17dp"
+                android:textSize="16sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"

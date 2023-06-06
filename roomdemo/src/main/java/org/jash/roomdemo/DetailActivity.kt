@@ -4,12 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.google.gson.GsonBuilder
 import org.jash.common.activity.BaseActivity
 import org.jash.common.annotations.BindingLayout
 import org.jash.common.annotations.Subscribe
-import org.jash.common.proscessor
+import org.jash.common.processor
 import org.jash.roomdemo.adapter.ProductBannerAdapter
 import org.jash.roomdemo.databinding.ActivityDetailBinding
 import org.jash.roomdemo.databinding.ConfigItemBinding
@@ -24,7 +25,7 @@ class DetailActivity : BaseActivity() {
         val goodService = retrofit.create(GoodService::class.java)
         val id = intent.getIntExtra("product_id", 0)
         setSupportActionBar(binding.toolbar)
-        goodService.getDetail(id).subscribe{ proscessor.onNext(it.data)}
+        goodService.getDetail(id).subscribe{ processor.onNext(it.data)}
     }
 
     @Subscribe
@@ -45,6 +46,9 @@ class DetailActivity : BaseActivity() {
             itemBinding.spinner.setAdapter(ArrayAdapter(this, android.R.layout.simple_list_item_1, android.R.id.text1, it.value))
             binding.config.addView(itemBinding.root)
         }
-
+    }
+    @Subscribe
+    fun showMessage(s:String) {
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show()
     }
 }

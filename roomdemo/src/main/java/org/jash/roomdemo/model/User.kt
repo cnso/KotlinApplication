@@ -1,9 +1,9 @@
 package org.jash.roomdemo.model
 
-import androidx.room.ColumnInfo
+import android.content.Context
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import org.jash.common.proscessor
+import org.jash.common.processor
 import org.jash.roomdemo.GoodService
 import org.jash.roomdemo.retrofit
 
@@ -29,9 +29,9 @@ data class User(
         val service = retrofit.create(GoodService::class.java)
         service.login(this).subscribe {
             if (it.code == 200) {
-                proscessor.onNext(it.data)
+                processor.onNext(it.data)
             } else {
-                proscessor.onNext(it.message)
+                processor.onNext(it.message)
             }
         }
 //        userDao.insert(user).subscribeOn(Schedulers.io()).subscribe({ println("保存完成")}, {it.printStackTrace()})

@@ -1,23 +1,19 @@
 package org.jash.roomdemo
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
-import androidx.activity.viewModels
+import androidx.core.app.ActivityOptionsCompat
 import androidx.databinding.DataBindingUtil
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.schedulers.Schedulers
 import org.jash.common.activity.BaseActivity
-import org.jash.common.activity.SafeSubscribe
 import org.jash.common.adapter.CommonAdapter
 import org.jash.common.annotations.Subscribe
-import org.jash.common.proscessor
+import org.jash.common.processor
 import org.jash.roomdemo.databinding.ActivityMain2Binding
-import org.jash.roomdemo.model.Category
 import org.jash.roomdemo.model.Product
 import org.jash.roomdemo.model.ProductList
-import org.jash.roomdemo.repository.ApiRepository
-import org.jash.roomdemo.viewmodel.Main2ViewModel
 
 class MainActivity2 : BaseActivity() {
     lateinit var adapter: CommonAdapter<Product>
@@ -26,7 +22,8 @@ class MainActivity2 : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding =
-            DataBindingUtil.setContentView<ActivityMain2Binding>(this, R.layout.activity_main2)
+            DataBindingUtil.setContentView(this, R.layout.activity_main2)
+        setSupportActionBar(binding.toolbar)
 //        val main2ViewModel by viewModels<Main2ViewModel> ()
         productList = ProductList()
         adapter =
@@ -72,7 +69,7 @@ class MainActivity2 : BaseActivity() {
 //            apiRepository.loadCategory(1)
 //        }
         retrofit.create(GoodService::class.java).getProducts(0, 1, 5)
-            .subscribe { it.data.forEach(proscessor::onNext) }
+            .subscribe { it.data.forEach(processor::onNext) }
 
     }
     @Subscribe
@@ -87,5 +84,20 @@ class MainActivity2 : BaseActivity() {
         binding.refresh.isRefreshing = false
         category.productList = productList
         adapter += category
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_detail, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId) {
+            R.id.action_cart -> {
+                startActivity(Intent(this, MainActivity3::class.java))
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 }

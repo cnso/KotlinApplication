@@ -10,7 +10,8 @@ import androidx.databinding.DataBindingUtil
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 import org.jash.common.activity.SafeSubscribe
-import org.jash.common.proscessor
+import org.jash.common.logd
+import org.jash.common.processor
 import org.jash.roomdemo.databinding.ActivityMainBinding
 import org.jash.roomdemo.model.User
 import org.jash.roomdemo.viewmodel.UserViewModel
@@ -25,14 +26,16 @@ class MainActivity : AppCompatActivity() {
             DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
         val userDao = database.getUserDao()
         safeSubscribe = SafeSubscribe(
-            proscessor.ofType(User::class.java)
+            processor.ofType(User::class.java)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
+                    loginUser = it
                     val intent = Intent(this, MainActivity2::class.java)
+                    logd(it.toString())
                     startActivity(intent)
                     finish()
                 },
-            proscessor.ofType(String::class.java)
+            processor.ofType(String::class.java)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
                     when (it) {
@@ -46,7 +49,6 @@ class MainActivity : AppCompatActivity() {
         val userViewModel by viewModels<UserViewModel>()
         val user = userViewModel.user
         binding.user = user
-
         database.getUserDao().getUsers()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
